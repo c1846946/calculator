@@ -36,7 +36,7 @@ function operate(operator, a, b) {
     }
 }
 
-function populateDisplay(num) { //nums need to be a string
+function pressNumber(num) { //nums need to be a string
     if (!num) {
         return
     } else if (displayValue == 0) {
@@ -44,25 +44,32 @@ function populateDisplay(num) { //nums need to be a string
     } else {
     displayValue += num
     }
+    display.innerText = displayValue;
 }
 
 function chooseOperator(operator) {
     op = operator;
     firstNumber = Number(displayValue);
+    let tempDisplay = displayValue;
+    display.innerText = tempDisplay;
+    displayValue = "";
 }
 
 function pressEquals() {
     secondNumber = Number(displayValue);
-    displayValue = String(operate(op, firstNumber, secondNumber))
+    tempDisplay = String(operate(op, firstNumber, secondNumber))
+    display.innerText = tempDisplay;
+    displayValue = "";
 }
 
 //convert displayvalue to number when set to a,b
-populateDisplay("7")
-populateDisplay("6")
+pressNumber("7")
+pressNumber("6")
 chooseOperator("+")
 
-console.log(typeof op)
+pressNumber("1")
+pressEquals()
 
 //put this inside functions and change innertext to hold display after choose operator and setting display value to ""
-display.innerText = displayValue;
+
 
