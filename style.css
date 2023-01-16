@@ -40,6 +40,7 @@ body {
     background-color: rgb(150, 193, 190);
     border-radius: 2px;
     width: 42vh;
+    height: 10.5vh;
 }
 .operators > button {
 }

@@ -1,8 +1,10 @@
-let displayValue = 0;
+let displayValue = "";
 let display = document.querySelector(".display");
 let firstNumber
 let op
 let secondNumber
+let operatorDisplay
+let equalDisplay
 
 
 function add(a,b) {
@@ -37,39 +39,49 @@ function operate(operator, a, b) {
 }
 
 function pressNumber(num) { //nums need to be a string
-    if (!num) {
-        return
-    } else if (displayValue == 0) {
-        displayValue = num;
-    } else {
+    if (equalDisplay) clear();
     displayValue += num
-    }
     display.innerText = displayValue;
 }
 
 function chooseOperator(operator) {
     op = operator;
     firstNumber = Number(displayValue);
-    let tempDisplay = displayValue;
-    display.innerText = tempDisplay;
+    let operatorDisplay = displayValue;
+    display.innerText = operatorDisplay;
     displayValue = "";
 }
 
 function pressEquals() {
     secondNumber = Number(displayValue);
-    tempDisplay = String(operate(op, firstNumber, secondNumber))
-    display.innerText = tempDisplay;
+    equalDisplay = String(operate(op, firstNumber, secondNumber))
+    display.innerText = equalDisplay;
     displayValue = "";
 }
 
-//convert displayvalue to number when set to a,b
+function clear() {
+    firstNumber = undefined;
+    op = undefined;
+    secondNumber = undefined;
+    displayValue = "";
+    equalDisplay = undefined;
+    operatorDisplay = undefined;
+    display.innerText = displayValue
+}
+
+
 pressNumber("7")
 pressNumber("6")
 chooseOperator("+")
 
 pressNumber("1")
 pressEquals()
+pressNumber("6")
+clear()
 
-//put this inside functions and change innertext to hold display after choose operator and setting display value to ""
+console.log("first " + firstNumber ,"\nsecond " + secondNumber ,"\nop " + op, "\ndisplay " + displayValue, "\noperatorDisplay " + operatorDisplay, "\nequalDisplay " + equalDisplay)
+
+
+
 
 
