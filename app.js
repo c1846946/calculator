@@ -22,6 +22,8 @@ function multiply(a,b) {
 function divide(a,b) {
     return a / b;
 }
+    
+    
 
 function operate(operator, a, b) {
     switch (operator) {
@@ -38,25 +40,47 @@ function operate(operator, a, b) {
     }
 }
 
-function pressNumber(num) { //nums need to be a string
-    if (equalDisplay) clear();
+function pressNumber(evt) { //nums need to be a string
+    num = evt.target.id;
+    
+    //if (equalDisplay) clear();
     displayValue += num
     display.innerText = displayValue;
+    console.log("first " + firstNumber ,"\nsecond " + secondNumber ,"\nop " + op, "\ndisplay " + displayValue, "\noperatorDisplay " + operatorDisplay, "\nequalDisplay " + equalDisplay);
 }
 
-function chooseOperator(operator) {
-    op = operator;
+function chooseOperator(evt) {
+    if (op == undefined) firstNumber = undefined;
+    if (firstNumber && displayValue) {
+        pressEquals();
+    } else if (!firstNumber){
     firstNumber = Number(displayValue);
+    
     let operatorDisplay = displayValue;
     display.innerText = operatorDisplay;
     displayValue = "";
+    }
+    op = evt.target.id;
+    console.log(evt.target.id)
+    console.log("first " + firstNumber ,"\nsecond " + secondNumber ,"\nop " + op, "\ndisplay " + displayValue, "\noperatorDisplay " + operatorDisplay, "\nequalDisplay " + equalDisplay);
 }
 
 function pressEquals() {
+    //check for 0 denominator here
+    if (!firstNumber || !displayValue) return;
     secondNumber = Number(displayValue);
-    equalDisplay = String(operate(op, firstNumber, secondNumber))
+    if ((op == "/") &&  (secondNumber == "0")) {
+        clear();
+        display.innerText = "DAFUQ!?";
+    } else {
+    equalDisplay = String(Math.round(operate(op, firstNumber, secondNumber) * 100)/100);
     display.innerText = equalDisplay;
     displayValue = "";
+    op = undefined;
+    //make secondNumber undefined here???
+    firstNumber = Number(equalDisplay);
+    console.table(this.className, ":\n","first " + firstNumber ,"\nsecond " + secondNumber ,"\nop " + op, "\ndisplay " + displayValue, "\noperatorDisplay " + operatorDisplay, "\nequalDisplay " + equalDisplay);
+    }
 }
 
 function clear() {
@@ -69,19 +93,41 @@ function clear() {
     display.innerText = displayValue
 }
 
+//add listeners for all the buttons
+document.querySelector(".clear-button").addEventListener("click", clear);
+//add ids to all the number and operator buttons
+document.getElementById("9").addEventListener("click", pressNumber);
+document.getElementById("8").addEventListener("click", pressNumber);
+document.getElementById("7").addEventListener("click", pressNumber);
+document.getElementById("6").addEventListener("click", pressNumber);
+document.getElementById("5").addEventListener("click", pressNumber);
+document.getElementById("4").addEventListener("click", pressNumber);
+document.getElementById("3").addEventListener("click", pressNumber);
+document.getElementById("2").addEventListener("click", pressNumber);
+document.getElementById("1").addEventListener("click", pressNumber);
+document.getElementById("0").addEventListener("click", pressNumber);
 
-pressNumber("7")
-pressNumber("6")
-chooseOperator("+")
+document.getElementById("+").addEventListener("click", chooseOperator);
+document.getElementById("-").addEventListener("click", chooseOperator);
+document.getElementById("*").addEventListener("click", chooseOperator);
+document.getElementById("/").addEventListener("click", chooseOperator);
 
-pressNumber("1")
-pressEquals()
-pressNumber("6")
-clear()
-
-console.log("first " + firstNumber ,"\nsecond " + secondNumber ,"\nop " + op, "\ndisplay " + displayValue, "\noperatorDisplay " + operatorDisplay, "\nequalDisplay " + equalDisplay)
+document.querySelector(".equals-button").addEventListener("click", pressEquals);
 
 
+// pressNumber("7")
+// pressNumber("6")
+// chooseOperator("+")
+
+// pressNumber("1")
+// pressEquals()
+// pressNumber("6");
+//clear()
+
+//console.log("first " + firstNumber ,"\nsecond " + secondNumber ,"\nop " + op, "\ndisplay " + displayValue, "\noperatorDisplay " + operatorDisplay, "\nequalDisplay " + equalDisplay);
+
+
+document.querySelector(".clear-button").addEventListener("click", clear);
 
 
 
