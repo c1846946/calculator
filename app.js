@@ -48,13 +48,14 @@ function pressDigit(evt) { //nums need to be a string
     } else {
     inputValue += num;
     };
+    console.log(typeof inputValue)
     
     display.innerText = inputValue;
     console.log("first " + first ,"\nsecond " + second ,"\nop " + op, "\ninputValue " , inputValue);
 }
 
 function pressOp(evt) {
-    if (!first) first = Number(inputValue);
+    if (!first || first && !op && inputValue) first = Number(inputValue);
     if (first && op && inputValue) {
         second = Number(inputValue);
         inputValue = "";
@@ -79,7 +80,7 @@ function pressOp(evt) {
     if (evt.key) op = evt.key;
     inputValue = ""
     
-    console.log(evt.target.id)
+    
     console.log("first " + first ,"\nsecond " + second ,"\nop " + op, "\ninputValue " , inputValue);
 }
 
@@ -92,14 +93,21 @@ function performCalc() {
 }
 
 function pressEquals() {
+    if (!first) return;
+    if (first && !op || first && op && !inputValue) {
+         op = undefined;
+    
+         return;
+     }
     second = Number(inputValue);
     inputValue = "";
     if (performCalc() == "infinite") {
         clear();
         display.innerText = "DAFUQ?!"
     } else{
-        display.innerText = performCalc();
         first = performCalc();
+        display.innerText = String(first);
+        
         second = undefined;
         op = undefined;
     }
@@ -141,17 +149,26 @@ document.getElementById("*").addEventListener("click", pressOp);
 document.getElementById("/").addEventListener("click", pressOp);
 
 document.querySelector(".equals-button").addEventListener("click", pressEquals);
-
+//prevent "Enter" key from selecting whatever is highlighted on the screen
+window.addEventListener('keydown',function(event){
+    if(event.key == "Enter") {
+        event.preventDefault();
+        return false;
+      }
+  });
 document.addEventListener('keyup', filterUnusedKeys);
-
+//keyboard support
 function filterUnusedKeys(evt) {
+    evt.preventDefault();
     console.log(evt.key)
     if(evt.key == "1" || evt.key == "2" || evt.key == "3" || evt.key == "4" || evt.key == "5" || evt.key == "6" || evt.key == "7" || evt.key == "8" || evt.key == "9" || evt.key == "0"  || evt.key == "." || evt.key == "b" || evt.key == "Backspace") pressDigit(evt);
 
     if(evt.key == "/" || evt.key == "*" || evt.key == "-" || evt.key == "+") pressOp(evt);
     
-    if (evt.key == "Enter") pressEquals();
-
+    if (evt.key == "Enter") {
+        
+        pressEquals();
+    }
     if (evt.key == "c") clear();
     
     
