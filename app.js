@@ -40,7 +40,7 @@ function operate(operator, a, b) {
 }
 
 function pressDigit(evt) { //nums need to be a string
-    if(evt.target.id) num = evt.target.id;
+    if (evt.target.id) num = evt.target.id;
     if (evt.key) num = evt.key;
     if (num == "." && inputValue.includes(".")) return;
     if (num == "b" || num == "Backspace") {
