@@ -28,6 +28,7 @@ body {
     flex-direction: column;
     gap: 5px;
     padding: 5px;
+    background-color: rgb(77, 80, 108);
 }
 
 .display {
@@ -37,12 +38,13 @@ body {
     padding: 8px;
     padding-right: 15px;
     border-style: solid;
-    background-color: rgb(150, 193, 190);
+    background-color: rgb(96, 183, 177);
     border-radius: 2px;
     width: 42vh;
     height: 10.5vh;
 }
 .operators > button {
+    background-color: rgb(140, 141, 154);
 }
 
 .numbers {
@@ -68,9 +70,8 @@ body {
     
 }
 
-.clear-button {
-    
-    
+.clear-button, .equals-button {
+    background-color: rgb(84, 94, 182);
 }
 
 .non-display {
@@ -92,4 +93,9 @@ button {
     border-color: black;
     min-width: 25px;
     min-height: 25px;
+}
+
+.row-four {
+    display: flex;
+    justify-content: space-between;
 }
